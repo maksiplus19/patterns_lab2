@@ -6,7 +6,9 @@
 #ifndef COMMAND_H
 #include "command.h"
 #endif
+
 #include "figtype.h"
+#include "headers.h"
 
 class Figure : public QGraphicsItem
 {
@@ -17,8 +19,6 @@ protected:
     QPen *pen;
     FigType ft;
 
-    void setX(int value);
-    void setY(int value);
     void setRadius(int value);
     void setBrush(QBrush *value);
     void setPen(QPen *value);
@@ -29,15 +29,25 @@ public:
     Figure(Figure &&fig);
     ~Figure();
 
+    Figure &operator =(Figure&&);
+
+    void setX(int value);
+    void setY(int value);
+
     int getX() const;
     int getY() const;
     int getRadius() const;
     FigType getFType() const;
+    QPen* getPen() const;
+    QBrush* getBrush() const;
 
     void reciveCommand(Command *commmand);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     QRectF boundingRect() const override;
+
+    Memento createMemento();
+    void restore(Figure* f);
 
     friend class MoveCommand;
     friend class ResizeCommand;
@@ -45,6 +55,7 @@ public:
     friend class ChangePenColorCommand;
     friend class ChangePenSozeCommand;
     friend class ChangeTypeCommand;
+    friend class MainWindow;
 };
 
 #endif // FIGURE_H

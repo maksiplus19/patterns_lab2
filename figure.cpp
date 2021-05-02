@@ -1,5 +1,6 @@
 #include "figure.h"
 #include <QtMath>
+#include <QDebug>
 
 Figure::Figure(QGraphicsItem *parent): QGraphicsItem(parent) {}
 
@@ -8,6 +9,7 @@ Figure::Figure(Figure &fig)
     x = fig.x;
     y = fig.y;
     radius = fig.radius;
+    ft = fig.ft;
 
     brush = new QBrush(*fig.brush);
     pen = new QPen(*fig.pen);
@@ -18,6 +20,7 @@ Figure::Figure(Figure &&fig)
     x = fig.x;
     y = fig.y;
     radius = fig.radius;
+    ft = fig.ft;
 
     delete brush;
     delete pen;
@@ -33,14 +36,36 @@ Figure::~Figure()
     delete pen;
 }
 
+Figure& Figure::operator=(Figure &&f)
+{
+    x = f.x;
+    y = f.y;
+    radius = f.radius;
+    ft = f.ft;
+    std::swap(brush, f.brush);
+    std::swap(pen, f.pen);
+    return *this;
+}
+
 FigType Figure::getFType() const
 {
     return ft;
 }
 
+QPen* Figure::getPen() const
+{
+    return pen;
+}
+
+QBrush *Figure::getBrush() const
+{
+    return brush;
+}
+
 void Figure::reciveCommand(Command *commmand)
 {
     commmand->execute(this);
+    delete commmand;
 }
 
 void Figure::setType(const FigType &value)
@@ -134,4 +159,23 @@ QRectF Figure::boundingRect() const
 {
     QPointF lTop = mapToScene(x-radius, y-radius), rBottom = mapToScene(x+radius, y+radius);
     return QRectF(lTop, rBottom);
+}
+
+Memento Figure::createMemento()
+{
+    auto a = new Figure(*this);
+    return Memento(this, a);
+}
+
+void Figure::restore(Figure *f)
+{
+    x = f->x;
+    y = f->y;
+    radius = f->radius;
+    ft = f->ft;
+
+    delete brush;
+    delete pen;
+    brush = new QBrush(*f->brush);
+    pen = new QPen(*f->pen);
 }

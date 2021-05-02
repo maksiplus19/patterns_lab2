@@ -2,7 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "headers.h"
+#include <QMenu>
+#include <QStack>
+#include "figure.h"
+#include "multicommand.h"
+#include "qcustomgraphicview.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -17,15 +21,29 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Figure* newFigure();
+    void addMemory(QString description, Memento memento);
 
 private slots:
     void on_brushColorButton_clicked();
 
     void on_penColorButton_clicked();
 
+    void on_createCommand_triggered();
+
+    void on_undoButton_clicked();
+
+    void on_multicommand_triggered();
+
+    void on_saveButton_clicked();
+
+    void on_clearButton_clicked();
+
 private:
-    QColor penColor, brushColor;
+    QColor penColor = QColor(0, 0, 0), brushColor = QColor(0, 0, 0);
     Ui::MainWindow *ui;
-//    FigureFactory *factory;
+    QMenu* commandMenu;
+    QStack<Memento> memoryStack;
+    QCustomGraphicView* viewer;
+    QMap<QString, MultiCommand*> multimap;
 };
 #endif // MAINWINDOW_H

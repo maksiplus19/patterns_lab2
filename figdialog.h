@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QColorDialog>
 #include "figtype.h"
+#include "figure.h"
 
 namespace Ui {
 class FigDialog;
@@ -14,7 +15,7 @@ class FigDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FigDialog(FigType figType, QWidget *parent = nullptr);
+    explicit FigDialog(Figure *fig, QWidget *parent = nullptr);
     ~FigDialog();
 
     FigType getType() const;

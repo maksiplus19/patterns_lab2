@@ -12,6 +12,8 @@ private:
 public:
     ChangeMainColorCommand(QColor _color): color(_color){};
     void execute(Figure *fig) override;
+    QString description() override;
+    Command *copy() override;
 };
 
 #endif // CHANGECOLORCOMMAND_H

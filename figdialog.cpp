@@ -1,12 +1,12 @@
 #include "figdialog.h"
 #include "ui_figdialog.h"
 
-FigDialog::FigDialog(FigType figType, QWidget *parent) :
+FigDialog::FigDialog(Figure *fig, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FigDialog)
 {
     ui->setupUi(this);
-    switch (figType) {
+    switch (fig->getFType()) {
     case FigType::Circle:
         ui->circleButton->setChecked(true);
         break;
@@ -23,6 +23,12 @@ FigDialog::FigDialog(FigType figType, QWidget *parent) :
         ui->hexButton->setChecked(true);
         break;
     }
+
+    ui->penSizelSlider->setValue(fig->getPen()->width());
+    ui->figSizeSlider->setValue(fig->getRadius());
+    penColor = fig->getPen()->color();
+    brushColor = fig->getBrush()->color();
+
     setModal(true);
 }
 

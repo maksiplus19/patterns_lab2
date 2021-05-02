@@ -10,6 +10,8 @@ private:
 public:
     ResizeCommand(int _radius): radius(_radius){};
     void execute(Figure *fig) override;
+    QString description() override;
+    Command *copy() override;
 };
 
 #endif // RESIZECOMMAND_H

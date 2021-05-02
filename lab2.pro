@@ -14,11 +14,16 @@ SOURCES += \
     changepensizecommand.cpp \
     changetypecommand.cpp \
     command.cpp \
+    createcommanddialog.cpp \
     figdialog.cpp \
     figure.cpp \
+    figureproxy.cpp \
     main.cpp \
     mainwindow.cpp \
+    memento.cpp \
     movecommand.cpp \
+    multicommand.cpp \
+    newfigurecommand.cpp \
     qcustomgraphicview.cpp \
     resizecommand.cpp
 
@@ -28,15 +33,23 @@ HEADERS += \
     changepensizecommand.h \
     changetypecommand.h \
     command.h \
+    commands.h \
+    createcommanddialog.h \
     figdialog.h \
     figtype.h \
     figure.h \
+    figureproxy.h \
+    headers.h \
     mainwindow.h \
+    memento.h \
     movecommand.h \
+    multicommand.h \
+    newfigurecommand.h \
     qcustomgraphicview.h \
     resizecommand.h
 
 FORMS += \
+    createcommanddialog.ui \
     figdialog.ui \
     mainwindow.ui
 

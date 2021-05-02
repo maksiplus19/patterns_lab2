@@ -6,7 +6,10 @@
 #include <QGraphicsScene>
 #include <QMouseEvent>
 
-#include "figure.h"
+#include "commands.h"
+#include "headers.h"
+
+class MainWindow;
 
 class QCustomGraphicView : public QGraphicsView
 {
@@ -16,15 +19,18 @@ private:
 
     int getType(QGraphicsItem* item);
 
-    Figure *fig;
-    bool isPressed;
+    Figure *fig = nullptr;
+    bool isPressed, isMoved = false;
+    int saveX, saveY;
 public:
-    QCustomGraphicView(MainWindow *parent=nullptr);
+    QCustomGraphicView(QWidget *parent=nullptr);
 
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+
+    Figure* getLastFigure();
 };
 
 #endif // QCUSTOMGRAPHICVIEW_H
